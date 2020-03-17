@@ -10,6 +10,7 @@ from pygame.locals import *
 
 from utils import *
 
+port = 9001
 MSG_SIZE = 4096
 
 host = socket.gethostname()  # The server's hostname or IP address
@@ -21,8 +22,6 @@ input_host.pack()
 input_port = Entry(root)
 input_port.pack()
 def connect(s):
-    if len(input.get()) == 0:
-        return
     global host, port
     host = input_host.get()
     port = int(input_port.get())
@@ -32,7 +31,7 @@ send_button.pack()
 root.mainloop()
 
 print("Connecting to ",host,":",port)
-s.connect((host, PORT))
+s.connect((host, port))
 
 # obj = np.zeros((10,10))
 # msg = pickle.dumps(obj)
