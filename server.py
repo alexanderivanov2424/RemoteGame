@@ -8,7 +8,7 @@ from pygame.locals import *
 
 from utils import *
 
-PORT = 50000
+PORT = 9001
 MSG_SIZE = 4096
 
 USR_ID = 1
