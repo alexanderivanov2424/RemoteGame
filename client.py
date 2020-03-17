@@ -145,10 +145,12 @@ def handle_click(mouse_loc):
 
 
 def handle_press(key):
+    global Current_Game
     if Current_Game == None:
         return
     else:
         if key == K_ESCAPE:
+            Current_Game = None
             leave_hub()
             return
         Current_Game.handle_press(key)
