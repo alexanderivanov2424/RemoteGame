@@ -69,13 +69,12 @@ class Chat(Game):
             if usr.id == id:
                 name = usr.name
 
-        for i in self.updates.keys():
+        for k in self.updates.keys():
             for msg in data:
-                self.updates[i].append((name,msg))
+                self.updates[k].append((name,msg))
 
-        ret = self.updates[i]
-        self.updates[i] = []
-        print(self.updates)
+        ret = self.updates[id]
+        self.updates[id] = []
         return ret
 
     ########### CLIENT SIDE ###########
