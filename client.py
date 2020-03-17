@@ -88,6 +88,14 @@ def join_hub(i):
     data = s.recv(MSG_SIZE)
     Current_Game = (pickle.loads(data)[0])()
 
+def leave_hub():
+    msg = pickle.dumps(("LeaveHub",))
+    s.sendall(msg)
+    try:
+        status = s.recv(MSG_SIZE)
+    except:
+        pass
+
 def game_communication():
     data = Current_Game.get_packet()
     msg = pickle.dumps((">>",data))
@@ -140,6 +148,9 @@ def handle_press(key):
     if Current_Game == None:
         return
     else:
+        if key == K_ESCAPE:
+            leave_hub()
+            return
         Current_Game.handle_press(key)
 
 while True:
