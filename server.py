@@ -99,7 +99,7 @@ pygame.display.set_caption("Server")
 s = socket.socket()
 _thread.start_new_thread(run_window,(s,))
 
-host = '127.0.0.1'
+host = socket.gethostname()
 
 s.bind((host, PORT))
 s.listen()
