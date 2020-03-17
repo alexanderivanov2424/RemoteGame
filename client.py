@@ -14,9 +14,22 @@ PORT = 50000
 MSG_SIZE = 4096
 
 host = socket.gethostname()  # The server's hostname or IP address
-
-
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+root = Tk()
+input = Entry(root)
+input.pack()
+def connect(s):
+    if len(input.get()) == 0:
+        return
+    global host
+    host = input.get()
+    root.destroy()
+send_button = Button(root, text="Connect",command=lambda:connect(s))
+send_button.pack()
+root.mainloop()
+
+print(host)
 s.connect((host, PORT))
 
 # obj = np.zeros((10,10))

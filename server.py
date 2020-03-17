@@ -65,7 +65,7 @@ def host_client(clientsocket,addr, ID):
 
             if code == ">>":
                 ret = usr.hub.game.process_packet(obj[1],usr.id)
-
+                print(ret)
             clientsocket.send(pickle.dumps(ret))
     except:
         import sys
@@ -99,7 +99,7 @@ pygame.display.set_caption("Server")
 s = socket.socket()
 _thread.start_new_thread(run_window,(s,))
 
-host = socket.gethostname()
+host = '127.0.0.1'
 
 s.bind((host, PORT))
 s.listen()
