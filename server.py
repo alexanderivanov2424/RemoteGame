@@ -65,7 +65,6 @@ def host_client(clientsocket,addr, ID):
 
             if code == ">>":
                 ret = usr.hub.game.process_packet(obj[1],usr.id)
-                print(ret)
             clientsocket.send(pickle.dumps(ret))
     except:
         import sys

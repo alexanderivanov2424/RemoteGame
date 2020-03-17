@@ -75,6 +75,7 @@ class Chat(Game):
 
         ret = self.updates[i]
         self.updates[i] = []
+        print(self.updates)
         return ret
 
     ########### CLIENT SIDE ###########
