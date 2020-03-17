@@ -38,7 +38,11 @@ class Game:
         pass
 
     #store data about user inputs
-    def handle_input(self, mouse_loc):
+    def handle_click(self, mouse_loc):
+        pass
+
+    #store data about user inputs
+    def handle_press(self, key):
         pass
 
     #update state based on server response
@@ -86,7 +90,7 @@ class Chat(Game):
             screen.blit(text,(20, 60 + i*30))
 
     #store data about user inputs
-    def handle_input(self, mouse_loc):
+    def handle_click(self, mouse_loc):
         root = Tk()
         input = Entry(root)
         input.pack()
@@ -98,6 +102,10 @@ class Chat(Game):
         send_button = Button(root, text="OKAY",command=lambda:send(self))
         send_button.pack()
         root.mainloop()
+
+    #store data about user inputs
+    def handle_press(self, key):
+        pass
 
     #update state based on server response
     def update(self, data):

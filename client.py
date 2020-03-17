@@ -17,17 +17,18 @@ host = socket.gethostname()  # The server's hostname or IP address
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 root = Tk()
+Label(root, text="Host").grid(row=0)
+Label(root, text="Port").grid(row=1)
 input_host = Entry(root)
-input_host.pack()
 input_port = Entry(root)
-input_port.pack()
+input_host.grid(row=0, column=1)
+input_port.grid(row=1, column=1)
 def connect(s):
     global host, port
     host = input_host.get()
     port = int(input_port.get())
     root.destroy()
-send_button = Button(root, text="Connect",command=lambda:connect(s))
-send_button.pack()
+send_button = Button(root, text="Connect",command=lambda:connect(s)).grid(row=2)
 root.mainloop()
 
 print("Connecting to ",host,":",port)
@@ -132,8 +133,14 @@ def handle_click(mouse_loc):
                 if 50 + i*50 < mouse_loc[1] and mouse_loc[1] < 50 + i*50 + 40:
                     join_hub(i)
     else:
-        Current_Game.handle_input(mouse_loc)
+        Current_Game.handle_click(mouse_loc)
 
+
+def handle_press(key):
+    if Current_Game == None:
+        return
+    else:
+        Current_Game.handle_press(key)
 
 while True:
     for event in pygame.event.get():
@@ -144,6 +151,8 @@ while True:
         if event.type == pygame.MOUSEBUTTONUP:
             mouse_loc = pygame.mouse.get_pos()
             handle_click(mouse_loc)
+        if event.type == pygame.KEYUP:
+            handle_press(event.key)
 
     if time.time() - time_last_update > update_time:
         time_last_update = time.time()
