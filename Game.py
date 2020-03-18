@@ -5,7 +5,7 @@ class Hub:
         self.game.hub = self
 
         self.users = [] #list of users
-        self.time = 0
+        self.time = -1
 
 class User:
     def __init__(self, id):
