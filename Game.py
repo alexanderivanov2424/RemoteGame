@@ -1,12 +1,21 @@
-import pygame
-from pygame.locals import *
-from tkinter import *
 
-from Game import *
+class Hub:
+    def __init__(self, game):
+        self.game = game
+        self.game.hub = self
 
-class CodeNames(Game):
+        self.users = [] #list of users
+        self.time = 0
+
+class User:
+    def __init__(self, id):
+        self.id = id
+        self.name = "Flake " + str(id)
+        self.hub = None
+
+class Game:
     def __init__(self):
-        super(Game)
+        self.hub = None
 
     ########### SERVER SIDE ###########
     #update state based on client packet
