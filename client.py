@@ -10,6 +10,7 @@ from pygame.locals import *
 
 from utils import *
 
+
 port = 9001
 MSG_SIZE = 4096
 
@@ -21,6 +22,8 @@ Label(root, text="Host").grid(row=0)
 Label(root, text="Port").grid(row=1)
 input_host = Entry(root)
 input_port = Entry(root)
+input_host.insert(0,'73.158.64.33')
+input_port.insert(0,'9001')
 input_host.grid(row=0, column=1)
 input_port.grid(row=1, column=1)
 def connect(s):
@@ -34,13 +37,6 @@ root.mainloop()
 print("Connecting to ",host,":",port)
 s.connect((host, port))
 
-# obj = np.zeros((10,10))
-# msg = pickle.dumps(obj)
-# s.sendall(msg)
-# data = s.recv(MSG_SIZE)
-# recovered = pickle.loads(data)
-# print(host, " >> ",data)
-
 screen = pygame.display.set_mode((600,600))
 pygame.display.set_caption("Client")
 
@@ -51,6 +47,8 @@ hubs = []
 
 update_time = 1
 time_last_update = time.time() - update_time
+
+
 
 def get_hubs():
     global hubs
@@ -155,25 +153,33 @@ def handle_press(key):
             return
         Current_Game.handle_press(key)
 
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            s.close()
-            break
-        if event.type == pygame.MOUSEBUTTONUP:
-            mouse_loc = pygame.mouse.get_pos()
-            handle_click(mouse_loc)
-        if event.type == pygame.KEYUP:
-            handle_press(event.key)
 
-    if time.time() - time_last_update > update_time:
-        time_last_update = time.time()
-        if Current_Game == None:
-            get_hubs()
-        else:
-            game_communication()
+def main():
+    global time_last_update, Current_Game, update_time, s, screen
 
-    render(screen)
-    #pygame.display.update()
-    pygame.display.flip()
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                s.close()
+                break
+            if event.type == pygame.MOUSEBUTTONUP:
+                mouse_loc = pygame.mouse.get_pos()
+                handle_click(mouse_loc)
+            if event.type == pygame.KEYUP:
+                handle_press(event.key)
+
+        if time.time() - time_last_update > update_time:
+            time_last_update = time.time()
+            if Current_Game == None:
+                get_hubs()
+            else:
+                game_communication()
+
+        render(screen)
+        #pygame.display.update()
+        pygame.display.flip()
+
+
+if __name__ == '__main__':
+    main()
