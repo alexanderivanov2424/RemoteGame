@@ -2,6 +2,7 @@ import socket               # Import socket module
 import _thread
 import numpy as np
 import pickle
+import time
 
 import pygame
 from pygame.locals import *
@@ -77,7 +78,6 @@ def host_client(clientsocket,addr, ID):
         users.remove(usr)
 
 def run_window(s):
-
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -89,7 +89,21 @@ def run_window(s):
         #pygame.display.update()
         pygame.display.flip()
 
-
+def reaper():
+    clock = time.time()
+    while True:
+        if time.time() - clock > 1:
+            clock = time.time()
+            for hub in hubs:
+                if len(hub.users) == 0 and hub.time == 0:
+                    hubs.remove(hub)
+                    break
+                if len(hub.users) > 0:
+                    hub.time = -1
+                if len(hub.users) == 0 and hub.time == -1:
+                    hub.time = 100
+                if hub.time > 0:
+                    hub.time -= 1
 
 pygame.init()
 screen = pygame.display.set_mode((800,600))
@@ -97,6 +111,7 @@ pygame.display.set_caption("Server")
 
 s = socket.socket()
 _thread.start_new_thread(run_window,(s,))
+_thread.start_new_thread(reaper,())
 
 host = socket.gethostname()
 
